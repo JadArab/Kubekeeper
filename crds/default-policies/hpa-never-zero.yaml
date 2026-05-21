@@ -1,0 +1,14 @@
+apiVersion: kubekeeper.io/v1alpha1
+kind: DriftPolicy
+metadata:
+  name: hpa-never-zero
+  namespace: kubekeeper-system
+spec:
+  check: hpa-never-zero
+  description: >
+    HorizontalPodAutoscalers must have minReplicas >= 1. An HPA scaled to
+    zero during an incident and never corrected will leave the workload
+    permanently unreachable.
+  remediation:
+    tier: auto
+  severity: error

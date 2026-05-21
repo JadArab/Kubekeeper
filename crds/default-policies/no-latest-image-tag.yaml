@@ -1,0 +1,14 @@
+apiVersion: kubekeeper.io/v1alpha1
+kind: DriftPolicy
+metadata:
+  name: no-latest-image-tag
+  namespace: kubekeeper-system
+spec:
+  check: no-latest-image-tag
+  description: >
+    Container images must reference a pinned tag or digest. Using 'latest' or
+    an untagged image breaks reproducibility and can silently pull a different
+    binary on the next pod restart.
+  remediation:
+    tier: alert-only
+  severity: warning

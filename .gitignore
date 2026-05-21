@@ -1,12 +1,7 @@
-Byte-compiled / optimized / DLL files
-pycache/
+__pycache__/
 *.py[cod]
 *$py.class
-
-C extensions
 *.so
-
-Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -25,7 +20,18 @@ share/python-wheels/
 .installed.cfg
 *.whl
 *.egg
-
-Installer logs
 pip-log.txt
-pypoetry-lock.toml
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/

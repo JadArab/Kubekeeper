@@ -1,0 +1,14 @@
+apiVersion: kubekeeper.io/v1alpha1
+kind: DriftPolicy
+metadata:
+  name: require-resource-limits
+  namespace: kubekeeper-system
+spec:
+  check: require-resource-limits
+  description: >
+    All containers in Deployments and StatefulSets must declare CPU and memory
+    limits. Without limits a single runaway container can exhaust node resources
+    and starve neighbouring pods.
+  remediation:
+    tier: auto
+  severity: warning

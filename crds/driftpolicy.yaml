@@ -1,0 +1,72 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: driftpolicies.kubekeeper.io
+spec:
+  group: kubekeeper.io
+  scope: Namespaced
+  names:
+    plural: driftpolicies
+    singular: driftpolicy
+    kind: DriftPolicy
+    shortNames:
+      - dp
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      additionalPrinterColumns:
+        - name: Check
+          type: string
+          jsonPath: .spec.check
+        - name: Tier
+          type: string
+          jsonPath: .spec.remediation.tier
+        - name: Severity
+          type: string
+          jsonPath: .spec.severity
+        - name: Age
+          type: date
+          jsonPath: .metadata.creationTimestamp
+      schema:
+        openAPIV3Schema:
+          type: object
+          required:
+            - spec
+          properties:
+            spec:
+              type: object
+              required:
+                - check
+                - remediation
+                - severity
+              properties:
+                check:
+                  type: string
+                  description: >
+                    Name of the built-in policy to run (e.g. require-resource-limits).
+                description:
+                  type: string
+                  description: Human-readable description of what this policy enforces.
+                remediation:
+                  type: object
+                  required:
+                    - tier
+                  properties:
+                    tier:
+                      type: string
+                      enum:
+                        - auto
+                        - approval
+                        - alert-only
+                      description: >
+                        auto: KubeKeeper fixes the violation automatically.
+                        approval: A human must approve via `kubekeeper approve`.
+                        alert-only: The violation is recorded but never touched.
+                severity:
+                  type: string
+                  enum:
+                    - info
+                    - warning
+                    - error
+                    - critical

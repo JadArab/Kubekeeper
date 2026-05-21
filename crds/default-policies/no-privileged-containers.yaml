@@ -1,0 +1,14 @@
+apiVersion: kubekeeper.io/v1alpha1
+kind: DriftPolicy
+metadata:
+  name: no-privileged-containers
+  namespace: kubekeeper-system
+spec:
+  check: no-privileged-containers
+  description: >
+    Containers must not run with securityContext.privileged=true. A privileged
+    container has nearly unrestricted host access and is a critical security
+    boundary violation.
+  remediation:
+    tier: auto
+  severity: error

@@ -1,0 +1,67 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: remediationhistories.kubekeeper.io
+spec:
+  group: kubekeeper.io
+  scope: Namespaced
+  names:
+    plural: remediationhistories
+    singular: remediationhistory
+    kind: RemediationHistory
+    shortNames:
+      - rh
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      additionalPrinterColumns:
+        - name: Policy
+          type: string
+          jsonPath: .spec.policyName
+        - name: Resource
+          type: string
+          jsonPath: .spec.resourceName
+        - name: Status
+          type: string
+          jsonPath: .spec.status
+        - name: Timestamp
+          type: string
+          jsonPath: .spec.timestamp
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                policyName:
+                  type: string
+                  description: Name of the DriftPolicy that triggered this remediation.
+                resourceKind:
+                  type: string
+                  description: Kubernetes kind of the remediated resource.
+                resourceName:
+                  type: string
+                  description: Name of the remediated resource.
+                resourceNamespace:
+                  type: string
+                  description: Namespace of the remediated resource.
+                violationMessage:
+                  type: string
+                  description: Human-readable description of the violation that was fixed.
+                severity:
+                  type: string
+                  description: Severity level at time of detection.
+                action:
+                  type: string
+                  description: What KubeKeeper did (e.g. auto-patch).
+                status:
+                  type: string
+                  enum:
+                    - success
+                    - failed
+                  description: Whether the remediation succeeded.
+                timestamp:
+                  type: string
+                  description: RFC-3339 timestamp when the remediation was applied.

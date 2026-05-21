@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kubekeeper"
+version = "0.1.0"
+description = "Kubernetes drift detection and safe auto-remediation operator"
+requires-python = ">=3.11"
+dependencies = [
+    "kopf>=1.37",
+    "kubernetes>=29.0",
+    "typer>=0.12",
+    "rich>=13",
+]
+
+[project.scripts]
+kubekeeper = "kubekeeper.cli.main:app"
+kubekeeper-operator = "kubekeeper.operator.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["kubekeeper*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

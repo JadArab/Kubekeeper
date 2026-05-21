@@ -1,0 +1,7 @@
+kopf>=1.37
+kubernetes>=29.0
+typer[all]>=0.12
+rich>=13
+
+# development / testing
+pytest>=8.0

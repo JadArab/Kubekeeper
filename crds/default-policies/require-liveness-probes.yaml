@@ -1,0 +1,13 @@
+apiVersion: kubekeeper.io/v1alpha1
+kind: DriftPolicy
+metadata:
+  name: require-liveness-probes
+  namespace: kubekeeper-system
+spec:
+  check: require-liveness-probes
+  description: >
+    All containers in Deployments must define a livenessProbe so that
+    Kubernetes can detect and restart deadlocked processes automatically.
+  remediation:
+    tier: alert-only
+  severity: warning
